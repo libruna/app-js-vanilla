@@ -1,2 +1,2 @@
 # app-js-vanilla
- Page de controle de despesas utilzando JS
+ Page simples de controle de despesas em HTML, CSS e JavaScript.
