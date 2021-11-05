@@ -44,11 +44,15 @@ form.addEventListener('submit', handleFormSubmit);
 
 const addTransactionIntoDOM = transaction => {
     const li = document.createElement('li') 
+  
+    const operator = transaction.amount < 0 ? '-' : '+';
+    const amountWithoutOperator = Math.abs(transaction.amount);
+    const CssClass = transaction.amount < 0 ? 'minu' : 'plus';
 
-    li.innerHTML = `${transaction.id} - 
-                    ${transaction.name}
-                    <span> R$ ${transaction.amount} </span>
-                    <button onClick="removeTransaction(${transaction.id})">X</button> ` 
+    li.innerHTML = `${transaction.name}
+                    <span> ${operator} R$ ${amountWithoutOperator} </span>
+                    <button class="delete-btn" onClick="removeTransaction(${transaction.id})">X</button>`
+
     transactionsUl.append(li);
 }
 
