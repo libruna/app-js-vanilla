@@ -2,17 +2,6 @@ const transactionsUl = document.querySelector('#transactions');
 const inputTransactionName = document.querySelector('#text');
 const inputTransactionAmount= document.querySelector('#amount');
 
-const handleFormSubmit = event =>{
-
-    if(inputTransactionName.value.trim() === '' || 
-                inputTransactionAmount.value.trim() === ''){
-      alert('Informe a descrição e o valor da transação');
-
-    }
-}
-
-form.addEventListener('submit', handleFormSubmit);
-
 // objeto literal FICTICIO
 const dummyTransactions = [
     { id: 1, name: 'Bolo de brigadeiro', amount: -20 },
@@ -21,17 +10,35 @@ const dummyTransactions = [
     { id: 4, name: 'Violão', amount: 150 }
 ]
 
-                            // é o parametro da funcao
-const addTransactionIntoDOM = transaction =>{
-    const li = document.createElement('li')
+const addTransactionInArray = (transactionName, transactionAmount) => {
+    dummyTransactions.push({ id: 123, name: transactionName, amount: transactionAmount })
+}
+const handleFormSubmit = event => {
+    event.preventDefault();
 
-    li.innerHTML = `${transaction.name}`
+    if(inputTransactionName.value.trim() === '' || inputTransactionAmount.value.trim() === '') {
+      alert('Informe a descrição e o valor da transação');
+      return;
+    }
+    addTransactionInArray(inputTransactionName.value, inputTransactionAmount.value);
+    init();
+}
+
+form.addEventListener('submit', handleFormSubmit);
+                            // é o parametro da funcao
+const addTransactionIntoDOM = transaction => {
+    const li = document.createElement('li') //<li></li>
+
+    li.innerHTML = `${transaction.name}` //<li>'Bolo de brigadeiro'</li>
     //atribuindo um nó para o li
     transactionsUl.append(li);
 }
 
-const init = () =>{
+const init = () => {
+    // tratamento a nivel de codigo para nao submeter toda a lista novamente
+    transactionsUl.innerHTML = '';
     dummyTransactions.forEach(addTransactionIntoDOM);
 }
 
+// funcao de inicializacao do JS
 init();
