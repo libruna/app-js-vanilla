@@ -2,7 +2,6 @@ const transactionsUl = document.querySelector('#transactions');
 const inputTransactionName = document.querySelector('#text');
 const inputTransactionAmount= document.querySelector('#amount');
 
-// objeto literal FICTICIO
 const dummyTransactions = [
     { id: 1, name: 'Bolo de brigadeiro', amount: -20 },
     { id: 2, name: 'Salario', amount: 300 },
@@ -11,7 +10,7 @@ const dummyTransactions = [
 ]
 
 const addTransactionInArray = (transactionName, transactionAmount) => {
-    dummyTransactions.push({ id: 123, name: transactionName, amount: transactionAmount })
+    dummyTransactions.push({ id: 123, name: transactionName, amount: number(transactionAmount) })
 }
 const handleFormSubmit = event => {
     event.preventDefault();
@@ -25,20 +24,37 @@ const handleFormSubmit = event => {
 }
 
 form.addEventListener('submit', handleFormSubmit);
-                            // é o parametro da funcao
-const addTransactionIntoDOM = transaction => {
-    const li = document.createElement('li') //<li></li>
 
-    li.innerHTML = `${transaction.name}` //<li>'Bolo de brigadeiro'</li>
-    //atribuindo um nó para o li
+const addTransactionIntoDOM = transaction => {
+    const li = document.createElement('li') 
+
+    li.innerHTML = `${transaction.name}`;
     transactionsUl.append(li);
 }
 
-const init = () => {
-    // tratamento a nivel de codigo para nao submeter toda a lista novamente
-    transactionsUl.innerHTML = '';
-    dummyTransactions.forEach(addTransactionIntoDOM);
+const updateBalancesValues = () => {
+
+    //pega todos os valores(amount) de cada linha do array
+    const transactionAmounts = dummyTransactions.map(({ amount }) => amount);
+    console.log(transactionAmounts);
+
+    //totalizador
+    const total = transactionAmounts.reduce((accumulator, transaction) => accumulator + transaction,0);
+    console.log('Soma dos valores: ' + total);
+
+    //somente as receitas
+    const income = transactionAmounts.filter(value => value > 0).reduce((accumulator, transaction) => accumulator + transaction, 0);
+    console.log('Somente a soma dos valores positivos: ' + income);
+
+    //somente as despesas
+    const expenses = transactionAmounts.filter(value => value < 0).reduce((accumulator, transaction) => accumulator + transaction, 0);
+    console.log('Somente a soma dos valores negativos: ' + expenses);
 }
 
-// funcao de inicializacao do JS
+const init = () => {
+    transactionsUl.innerHTML = '';
+    dummyTransactions.forEach(addTransactionIntoDOM);
+    updateBalancesValues();
+}
+
 init();
