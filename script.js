@@ -25,7 +25,7 @@ const dummyTransactions = [
 const addTransactionIntoDOM = transaction =>{
     const li = document.createElement('li')
 
-    li.innerHTML = ${transaction.name}
+    li.innerHTML = `${transaction.name}`
     //atribuindo um nó para o li
     transactionsUl.append(li);
 }
