@@ -1,6 +1,9 @@
 const transactionsUl = document.querySelector('#transactions');
 const inputTransactionName = document.querySelector('#text');
 const inputTransactionAmount= document.querySelector('#amount');
+const incomeDisplay = document.querySelector('#money-plus');
+const expenseDisplay = document.querySelector('#money-minus');
+const balanceDisplay = document.querySelector('#balance');
 
 const dummyTransactions = [
     { id: 1, name: 'Bolo de brigadeiro', amount: -20 },
@@ -34,21 +37,21 @@ const addTransactionIntoDOM = transaction => {
 
 const updateBalancesValues = () => {
 
-    //pega todos os valores(amount) de cada linha do array
     const transactionAmounts = dummyTransactions.map(({ amount }) => amount);
     console.log(transactionAmounts);
 
-    //totalizador
     const total = transactionAmounts.reduce((accumulator, transaction) => accumulator + transaction,0);
     console.log('Soma dos valores: ' + total);
 
-    //somente as receitas
     const income = transactionAmounts.filter(value => value > 0).reduce((accumulator, transaction) => accumulator + transaction, 0);
     console.log('Somente a soma dos valores positivos: ' + income);
 
-    //somente as despesas
-    const expenses = transactionAmounts.filter(value => value < 0).reduce((accumulator, transaction) => accumulator + transaction, 0);
-    console.log('Somente a soma dos valores negativos: ' + expenses);
+    const expense = transactionAmounts.filter(value => value < 0).reduce((accumulator, transaction) => accumulator + transaction, 0);
+    console.log('Somente a soma dos valores negativos: ' + expense);
+
+    balanceDisplay.textContent =`R$ ${total}`; 
+    incomeDisplay.textContent = `R$ ${income}`;
+    expenseDisplay.textContent = `R$ ${expense}`;
 }
 
 const init = () => {
